@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('Vbtn', {
+      template: `<button>按钮</button>`
+    })
+    var aHeader = {
+      template: `
+        <div>
+          <div>我是头部</div>
+          <Vbtn/>
+        </div>
+      `
+    }
+    var aMain = {
+      template: `<div>我是主要区域</div>`
+    }
+    var aFooter = {
+      template: `<div>我是底部</div>`
+    }
+    var App = {
+      components: {
+        aHeader,
+        aMain,
+        aFooter
+      },
+      template: `
+        <div>
+          我是入口组件
+          <aHeader/>
+          <aMain/>
+          <aFooter/>
+        </div>
+      `,
+    }
+    new Vue({
+      el:'#app',
+      components: {
+        App
+      },
+      template: `<App />`
+    })
+  </script>
+</body>
+</html>

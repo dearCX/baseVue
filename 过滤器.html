@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    Vue.filter('myReverse', (value, str) => {
+      return str + value.split('').reverse().join('')
+    })
+    var App = {
+      data () {
+        return {
+          price: '',
+          message: 'hello vue'
+        }
+      },
+      template: `
+        <div>
+          <h1>我是入口组件</h1>
+          <input v-model="price">
+          <p>{{price | myPrice}}</p>
+          <p>{{message | myReverse('哈哈哈')}}</p>
+        </div>
+      `,
+      filters: {
+        myPrice (value) {
+          return `¥${value}`
+        }
+      }
+    }
+    new Vue({
+      el:'#app',
+      components: {
+        App
+      },
+      template: `<App />`
+    })
+  </script>
+</body>
+</html>

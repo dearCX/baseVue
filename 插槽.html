@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  .default{
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  .primary{
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+  }
+  .success{
+    color: #fff;
+    background-color: #67c23a;
+    border-color: #67c23a;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('Vbtn', {
+      template: `
+        <button class="default" :class="type">
+          <slot>按钮</slot>
+        </button>
+      `,
+      props: {
+        type: {
+          type: String,
+          default: ''
+        }
+      }
+    })
+    var aHeader = {
+      template: `
+        <div>
+          <div>我是头部</div>
+          <Vbtn/>
+        </div>
+      `
+    }
+    var aMain = {
+      template: `
+        <div>
+          我是主要区域
+          <Vbtn type="primary">基本按钮</Vbtn>
+          <Vbtn type="success">成功按钮</Vbtn>
+        </div>
+      `
+    }
+    var aFooter = {
+      template: `<div>我是底部</div>`
+    }
+    var App = {
+      components: {
+        aHeader,
+        aMain,
+        aFooter
+      },
+      template: `
+        <div>
+          我是入口组件
+          <aHeader/>
+          <aMain/>
+          <aFooter/>
+        </div>
+      `,
+    }
+    new Vue({
+      el:'#app',
+      components: {
+        App
+      },
+      template: `<App />`
+    })
+  </script>
+</body>
+</html>

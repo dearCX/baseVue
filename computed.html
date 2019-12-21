@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .active{
+      background-color: palevioletred;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>当前选中的人：{{name}}</h1>
+    <ul>
+      <li v-for="(item, index) of list" :key="item.id" @click="changeName(index)" :class="{ active : localIndex === index }">
+        <p>{{item.id}}-姓名{{item.name}}-年龄{{item.age}}-兴趣{{item.hobby}}</p>
+      </li>
+    </ul>
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el:'#app',
+      data () {
+        return {
+          localIndex: 0,
+          list: [
+            {id:0, name: 'jack', age: 30, hobby: '篮球'},
+            {id:1, name: 'ann', age: 30, hobby: '烘培'},
+            {id:2, name: 'connie', age: 30, hobby: '画画'},
+            {id:3, name: 'jim', age: 30, hobby: '游戏'},
+          ]
+        }
+      },
+      methods: {
+        changeName (index) {
+          this.name = index
+        }
+        // changeName (index) {
+        //   this.localIndex = index
+        // }
+      },
+      computed: {
+        //setter也可以
+        name: {
+          set (newValue) {
+            this.localIndex = newValue
+          },
+          get () {
+            return this.list[this.localIndex].name
+          }
+        }
+        //计算属性默认只有getter
+        // name () {
+        //   return this.list[this.localIndex].name
+        // }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="msg">
+    <p>{{msg}}</p>
+    <button @click="changeName">点击查看名字</button>
+    <h3>我是{{list[0].name}}</h3>
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el:'#app',
+      data () {
+        return {
+          msg: '',
+          list: [
+            {
+              name: 'jack'
+            }
+          ]
+        }
+      },
+      methods: {
+        changeName (val) {
+          this.list[0].name = 'rose'
+        }
+      },
+      watch: {
+        // 只能监听基本数据属性
+        msg (newValue, oldValue) {
+          if (newValue === 'hello') {
+            console.log('输入正确')
+          }
+        },
+        // 监听引用类型地址的数据，需要深度监听
+        list: {
+          handler (newValue, oldValue) {
+            console.log(newValue[0].name)
+          },
+          deep: true
+        }
+      }
+    })
+  </script>
+</body>
+</html>

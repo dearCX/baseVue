@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('myLi', {
+      template: `
+        <li>
+          我是占位符1
+          <slot name="two"></slot>
+          我是占位符2
+          <slot name="three"></slot>
+        </li>
+      `
+    })
+    var App = {
+      template: `
+        <div>
+          我是入口组件
+          <ul>
+            <myLi>
+              <h1 slot="two">标题</h1>
+              <h2 slot="three">内容</h2>
+            </myLi>
+          </ul>
+        </div>
+      `,
+    }
+    new Vue({
+      el:'#app',
+      components: {
+        App
+      },
+      template: `<App />`
+    })
+  </script>
+</body>
+</html>

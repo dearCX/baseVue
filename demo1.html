@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" :value="msg" @input="handleValue">
+    <h1>{{msg}}</h1>
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    /*
+    v-model = v-bind:value + v-on:input
+    */
+    new Vue({
+      el:'#app',
+      data(){
+        return {
+          msg:'hello'
+        }
+      },
+      methods:{
+        handleValue(e){
+          this.msg = e.target.value
+        }
+      }
+    })
+  </script>
+</body>
+</html>
