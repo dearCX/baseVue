@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+    var descCom = {
+      data () {
+        return {
+          msg: ''
+        }
+      },
+      template: `
+        <div>我是{{msg}}</div>
+      `,
+      created () {
+        this.msg =  'frontEnd'
+      },
+      watch: {
+        '$route'(to, from){
+          this.msg = to.params.id
+        }
+      }
+    }
+    var Home = {
+      template: `
+        <div>
+          我是首页内容
+          <router-link :to="{name:'descCom',params:{id:'frontEnd'}}">到前端页面</router-link>
+          <router-link :to="{name:'descCom',params:{id:'backEnd'}}">到后端页面</router-link>
+          <router-view/>
+        </div>
+      `
+    }
+    var Main = {
+      template: `
+        <div>
+          我是main页面
+        </div>
+      `
+    }
+    var App = {
+      template: `
+        <div>
+            <router-link :to="{name:'home'}">
+              首页
+            </router-link>
+            <router-link :to="{name:'main'}">main页面</router-link>
+            <router-view/>
+        </div>
+      `
+    }
+    var router = new VueRouter({
+      routes: [
+        {
+          path: '/home',
+          name: 'home',
+          component: Home,
+          children: [
+            {
+              path: '/home/:id',
+              name: 'descCom',
+              component: descCom,
+            }
+          ]
+        },
+        {
+          path: '/main',
+          name: 'main',
+          component: Main
+        }
+      ]
+    })
+    new Vue({
+      el: '#app',
+      data () {
+        return {
+
+        }
+      },
+      components: {
+        App
+      },
+      router,
+      template: '<App/>'
+    })
+    </script>
+</body>
+</html>
