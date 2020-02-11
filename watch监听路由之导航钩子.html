@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+  <script>
+    var App = {
+      template: `
+        <div>
+          <router-link to="/index">主页</router-link>
+          <router-link to="/post">我的博客</router-link>
+          <router-view></router-view>
+        </div>
+      `
+    }
+    var Index = {
+      template: `
+        <div>主页</div>
+      `
+    }
+    var Post = {
+      template: `
+        <div>我的博客</div>
+      `,
+      created () {
+        this.fetchData()
+      },
+      watch: {
+        '$route': 'fetchData'
+      },
+      methods: {
+        fetchData () {
+          //后端返回代码测试例子
+          this.$axios.get('http://test').then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }
+    }
+    var router = new VueRouter({
+      routes: [
+        {
+          path: '/index',
+          name: 'index',
+          component: Index
+        },
+        {
+          path: '/post',
+          name: 'post',
+          component: Post
+        }
+      ]
+    })
+    new Vue({
+      el: '#app',
+      components: {
+        App
+      },
+      router,
+      template: '<App/>'
+    })
+  </script>
+</body>
+</html>

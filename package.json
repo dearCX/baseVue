@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "vue-router": "^3.1.5",
     "_vue-router@3.1.5@vue-router": "^3.1.5",
-    "vue": "^2.6.10"
+    "axios": "^0.19.2",
+    "vue": "^2.6.10",
+    "vue-router": "^3.1.5"
   },
   "devDependencies": {},
   "scripts": {

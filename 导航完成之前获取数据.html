@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+  <script>
+    var App = {
+      template: `
+        <div>
+          <router-link :to="{name:'index'}">主页</router-link>
+          <router-link :to="{name:'post'}">我的博客</router-link>
+          <router-link :to="{name:'user', params:{id:1}}">我是用户1</router-link>
+          <router-link :to="{name:'user', params:{id:2}}">我是用户2</router-link>
+          <router-view></router-view>
+        </div>
+      `
+    }
+    var Index = {
+      template: `
+        <div>主页</div>
+      `
+    }
+    var Post = {
+      template: `
+        <div>我的博客</div>
+      `
+    }
+    var User = {
+      template: `
+        <div>
+          我是用户内容{{id}}
+        </div>
+      `,
+      data () {
+        return {
+          id: 1
+        }
+      },
+      beforeRouteEnter (to, from, next) {
+        // 不能访问vue实例，不能使用this
+        next(vm => {
+          // 模拟请求省略
+          // axios.get('http://test')
+          vm.id = to.params.id
+        })
+      },
+      beforeRouteUpdate (to, from, next) {
+        this.id = to.params.id
+        next()
+      },
+      beforeRouteLeave (to, from, next) {
+        next()
+      },
+      methods: {
+        fetchData () {
+          //后端返回代码测试例子
+          this.$axios.get('http://test').then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }
+    }
+    var router = new VueRouter({
+      routes: [
+        {
+          path: '/index',
+          name: 'index',
+          component: Index
+        },
+        {
+          path: '/post',
+          name: 'post',
+          component: Post
+        },
+        {
+          path: '/user/:id',
+          name: 'user',
+          component: User,
+        }
+      ]
+    })
+    new Vue({
+      el: '#app',
+      components: {
+        App
+      },
+      router,
+      template: '<App/>'
+    })
+  </script>
+</body>
+</html>
